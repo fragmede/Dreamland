@@ -65,13 +65,23 @@ public static class Model extends LXModel
     }
   }
 
-  private static class BarFixture extends Component {
+  private static class CarouselArm extends Component {
     private static final int BAR_LENGTH = 10 * FEET;
     private static final int NUMBER_OF_LEDS_PER_LEG = 10;
 
-    public BarFixture() {
+    public CarouselArm() {
       for (int i = 0; i < NUMBER_OF_LEDS_PER_LEG; i++)
         addPoint(new Point((i + 0.5) / NUMBER_OF_LEDS_PER_LEG * BAR_LENGTH, 0, 0));
+    }
+  }
+
+  private static class CarouselLeg extends Component {
+    private static final int BAR_LENGTH = 8 * FEET;
+    private static final int NUMBER_OF_LEDS_PER_LEG = 10;
+
+    public CarouselLeg() {
+      for (int i = 0; i < NUMBER_OF_LEDS_PER_LEG; i++)
+        addPoint(new Point(0, 0, (i + 0.5) / NUMBER_OF_LEDS_PER_LEG * BAR_LENGTH));
     }
   }
 
@@ -79,9 +89,14 @@ public static class Model extends LXModel
     private static final int HEIGHT_OF_CAROUSEL = -10 * FEET;
 
     public CarouselFixture(int nbars) {
-      BarFixture prototype = new BarFixture();
+      CarouselArm arm = new CarouselArm();
       for (int i = 0; i < nbars; i++)
-        addComponent(prototype.translate(0, 0, HEIGHT_OF_CAROUSEL).rotate(2 * PI * i / nbars));
+        addComponent(arm.translate(0, 0, HEIGHT_OF_CAROUSEL).rotate(2 * PI * i / nbars));
+
+      CarouselLeg leg = new CarouselLeg();
+      addComponent(leg.translate(-1, -1, HEIGHT_OF_CAROUSEL));
+      addComponent(leg.translate(-1, 1, HEIGHT_OF_CAROUSEL));
+      addComponent(leg.translate(0, 0, HEIGHT_OF_CAROUSEL));
     }
   }
 
@@ -121,30 +136,34 @@ public static class Model extends LXModel
     public LampPostFixture(){
       for (int i = 0; i < NLEDS; i++)
         addPoint( new Point(0, 0, (i + 0.5f) / NLEDS * HEIGHT_OF_POST));
-      
     }
   }
 
   private static class WorldFixture extends Component {
     public WorldFixture() {
+      //addPoint( new Point(0, 0, 0));
       // carousel
       addComponent(new CarouselFixture(9));
+      //new Point(0, 0, (i + 0.5f) / NLEDS * HEIGHT_OF_POST));
       
-      BenchFixture bench = new BenchFixture();
-      // inner benches
-      for (int i = 0; i < 3; i++) {
-       addComponent(bench.translate(0, -10 * FEET, 0).rotate(2 * PI * i / 3f));
-      }
-      // outer benches
-      for (int i = 0; i < 3; i++) {
-        addComponent(bench.translate(0, -15 * FEET, 0).rotate(2 * PI * (i + 0.5) / 3f));
-      }
+      if (true){
+	BenchFixture bench = new BenchFixture();
+	// inner benches
+	for (int i = 0; i < 3; i++) {
+	 addComponent(bench.translate(0, -10 * FEET, 0).rotate(2 * PI * i / 3f));
+	}
+	// outer benches
+	for (int i = 0; i < 3; i++) {
+	  addComponent(bench.translate(0, -15 * FEET, 0).rotate(2 * PI * (i + 0.5) / 3f));
+	}
 
-      LampPostFixture post = new LampPostFixture();
-      // lamp posts
-      for (int i = 0; i <3; i++) {
-        addComponent(post.translate(0, -20 * FEET, 0).rotate(2 * PI * i / 3f));
+	LampPostFixture post = new LampPostFixture();
+	// lamp posts
+	for (int i = 0; i <3; i++) {
+	  addComponent(post.translate(0, -20 * FEET, 0).rotate(2 * PI * i / 3f));
+	}
       }
     }
+
   }
 }

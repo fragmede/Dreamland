@@ -81,12 +81,30 @@ void setup()
 	// Various sliders, knobs and buttons
 	// lx.ui.addLayer(new UIComponentsDemo(lx.ui, width-144, 4)); 
 
-	buildOutputs();
+
+
+	//buildOutputs();
 }
 
 void draw() 
 {
     background(#292929);
+/*
+    noStroke();
+    fill(#ff00ff);
+
+    pushMatrix();
+
+    translate(42, 0, 30);
+    rotateY(90);
+    beginShape();
+    vertex(300, 200);
+    vertex(85, 200);
+    vertex(85, 75);
+    vertex(30, 75);
+    endShape(CLOSE);
+    popMatrix();
+*/
 }
 
 
